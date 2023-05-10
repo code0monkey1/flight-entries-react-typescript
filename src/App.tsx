@@ -20,7 +20,6 @@ function App() {
           const diaryEntries:NonSensitiveDiaryEntry[]= await getAllEntries();
 
           setDiaryEntries(diaryEntries)
-
         }
         catch(err){
            
@@ -45,8 +44,6 @@ function App() {
   const onSubmit = (e:React.SyntheticEvent)=>{
 
     e.preventDefault();
-
-
 
   }
 
