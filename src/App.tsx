@@ -10,7 +10,13 @@ function App() {
   console.log("entry",entry)
   console.log("diaryEntries",diaryEntries)
   
-  
+  const setEntryField=(e:React.ChangeEvent<HTMLInputElement>)=>{
+
+   setEntry({
+      ...entry,
+      [e.target.name]: e.target.value,
+    });
+  }
   useEffect(() => {
    
     const fetchDiaryEntries=async()=>{
@@ -55,13 +61,8 @@ function App() {
       <form onSubmit={onFormSubmit}> 
           
           <h1>Add new entry</h1>
-          <h2>Date : <input type="date" onChange={({target})=>{
-            setEntry({
-              ...entry,
-              date:target.value
-            })
-          }}/></h2>
-          <h2>Weather : </h2>
+          <h2>Date : <input name="date" type="date" onChange={setEntryField}/></h2>
+          <h2>Weather :  <input name="weather" type="text" onChange={setEntryField}/></h2>
           <h2>Visibility : </h2>
           <h2>Comment : </h2>
          <button type="submit" >Submit</button>
