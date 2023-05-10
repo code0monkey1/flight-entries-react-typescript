@@ -41,10 +41,7 @@ function App() {
          }
     }
 
-
     fetchDiaryEntries()
-  
-
   },[])
 
   const onFormSubmit = (e:React.FormEvent)=>{
