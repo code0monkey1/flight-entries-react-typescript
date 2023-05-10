@@ -10,7 +10,7 @@ function App() {
   console.log("entry",entry)
   console.log("diaryEntries",diaryEntries)
   
-  const setEntryField=(e:React.ChangeEvent<HTMLInputElement>)=>{
+  const setEntryField=(e:React.ChangeEvent<HTMLInputElement|HTMLSelectElement>)=>{
 
    setEntry({
       ...entry,
@@ -62,7 +62,18 @@ function App() {
           
           <h1>Add new entry</h1>
           <h2>Date : <input name="date" type="date" onChange={setEntryField}/></h2>
-          <h2>Weather :  <input name="weather" type="text" onChange={setEntryField}/></h2>
+          <h2>Weather : 
+             <label>
+          Select an option:
+          <select name="weather" onChange={setEntryField}>
+            <option value="">--Please choose an option--</option>
+            <option value="option1">Option 1</option>
+            <option value="option2">Option 2</option>
+            <option value="option3">Option 3</option>
+          </select>
+        </label>
+
+          </h2>
           <h2>Visibility : </h2>
           <h2>Comment : </h2>
          <button type="submit" >Submit</button>
