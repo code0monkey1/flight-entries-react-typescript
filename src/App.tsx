@@ -41,16 +41,18 @@ function App() {
 
   },[])
 
-  const onSubmit = (e:React.SyntheticEvent)=>{
+  const onFormSubmit = (e:React.FormEvent)=>{
 
     e.preventDefault();
+
+    console.log(e.target);
 
   }
 
   return (
     <div style={{padding:"2rem"}}>
      
-      <form> 
+      <form onSubmit={onFormSubmit}> 
           
           <h1>Add new entry</h1>
           <h2>Date : <input type="date" onChange={({target})=>{
@@ -62,7 +64,7 @@ function App() {
           <h2>Weather : </h2>
           <h2>Visibility : </h2>
           <h2>Comment : </h2>
-         <button type="submit">Submit</button>
+         <button type="submit" >Submit</button>
          
       </form>
       
