@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import { getAllEntries } from "./services/notesService";
-import { NewDiaryEntry, NonSensitiveDiaryEntry } from "./types";
+import { FormEvent, NewDiaryEntry, NonSensitiveDiaryEntry } from "./types";
 function App() {
     
   const [entry,setEntry] = useState<Partial<NewDiaryEntry>>()
@@ -10,7 +10,7 @@ function App() {
   console.log("entry",entry)
   console.log("diaryEntries",diaryEntries)
   
-  const setEntryField=(e:React.ChangeEvent<HTMLInputElement|HTMLSelectElement>)=>{
+  const setEntryField=(e:FormEvent)=>{
 
    setEntry({
       ...entry,
