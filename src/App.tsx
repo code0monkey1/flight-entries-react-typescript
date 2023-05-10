@@ -4,7 +4,7 @@ import { getAllEntries } from "./services/notesService";
 import { NewDiaryEntry, NonSensitiveDiaryEntry } from "./types";
 function App() {
     
-  const [entry,setEntry] = useState<NewDiaryEntry>()
+  const [entry,setEntry] = useState<Partial<NewDiaryEntry>>()
   const [diaryEntries,setDiaryEntries] = useState<NonSensitiveDiaryEntry[]>()
     
   console.log("entry",entry)
@@ -42,13 +42,26 @@ function App() {
 
   },[])
 
+  const onSubmit = (e:React.SyntheticEvent)=>{
+
+    e.preventDefault();
+
+
+
+  }
+
   return (
     <div style={{padding:"2rem"}}>
      
       <form> 
           
           <h1>Add new entry</h1>
-          <h2>Date : </h2>
+          <h2>Date : <input type="date" onChange={({target})=>{
+            setEntry({
+              ...entry,
+              date:target.value
+            })
+          }}/></h2>
           <h2>Weather : </h2>
           <h2>Visibility : </h2>
           <h2>Comment : </h2>
