@@ -5,7 +5,7 @@ import { FormEvent, NewDiaryEntry, NonSensitiveDiaryEntry } from "./types";
 function App() {
     
   const [entry,setEntry] = useState<Partial<NewDiaryEntry>>()
-  const [diaryEntries,setDiaryEntries] = useState<NonSensitiveDiaryEntry[]>()
+  const [diaryEntries,setDiaryEntries] = useState<NonSensitiveDiaryEntry[]>([])
     
   console.log("entry",entry)
   console.log("diaryEntries",diaryEntries)
@@ -66,7 +66,6 @@ function App() {
              <label>
           Select an option:
           <select name="weather" onChange={setEntryField}>
-            <option value="">--Please choose an option--</option>
             <option value="option1">Option 1</option>
             <option value="option2">Option 2</option>
             <option value="option3">Option 3</option>
@@ -83,7 +82,7 @@ function App() {
    <hr/>
    <ol>
       {
-        diaryEntries?.map(entry=>
+        diaryEntries.map(entry=>
           
             <li key={entry.id}>
                   
