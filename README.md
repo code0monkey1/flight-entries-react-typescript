@@ -79,3 +79,7 @@ _The only check needed was to make sure that the NewEntry object has `Weather` a
     };
 
 ```
+
+> This is how you deal with an axios error : 
+>
+> https://dev.to/mdmostafizurrahaman/handle-axios-error-in-typescript-4mf9
