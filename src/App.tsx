@@ -1,29 +1,35 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { getAllEntries } from "./services/notesService";
-import { FormEvent, NewDiaryEntry, NonSensitiveDiaryEntry } from "./types";
+import DiaryEntries from "./components/DiaryEntries";
+import { createDiary, getDiaries } from './services/diaryService';
+
+import { NewDiaryEntry, NonSensitiveDiaryEntry, Visibility, Weather } from "./types";
 function App() {
     
-  const [entry,setEntry] = useState<Partial<NewDiaryEntry>>()
+  const [weather,setWeather] = useState<Weather|null>(null);
+  const [visibility,setVisibility]=useState<Visibility|null>(null);
+  const [comment,setComment] = useState('')
+  const [date,setDate] = useState('')
+  
   const [diaryEntries,setDiaryEntries] = useState<NonSensitiveDiaryEntry[]>([])
-    
-  console.log("entry",entry)
+  const [notification,setNotification] = useState('')
   console.log("diaryEntries",diaryEntries)
   
-  const setEntryField=(e:FormEvent)=>{
+  const displayError=(message:string) =>{
 
-   setEntry({
-      ...entry,
-      [e.target.name]: e.target.value,
-    });
+      setNotification(message)
+       setTimeout(()=>{
+         setNotification("")
+       },2000)
+       
   }
-  useEffect(() => {
+    useEffect(() => {
    
     const fetchDiaryEntries=async()=>{
             
          try{
 
-          const diaryEntries:NonSensitiveDiaryEntry[]= await getAllEntries();
+          const diaryEntries:NonSensitiveDiaryEntry[]= await getDiaries();
 
           setDiaryEntries(diaryEntries)
         }
@@ -47,49 +53,91 @@ function App() {
   const onFormSubmit = (e:React.FormEvent)=>{
 
     e.preventDefault();
+    
+     if(!weather || !visibility){
+      displayError("Weather of Visibility missing")
+       return;
+     }
+    
+    const newEntry:NewDiaryEntry={
+    date:date,
+    weather ,
+    visibility ,
+    comment
+     }
 
-    console.log(e.target);
+     createDiary(newEntry)
+     .then((data) => {
+      console.log("The newly created entry is",JSON.stringify(data,null,2))
+       setDiaryEntries(diaryEntries.concat(data))
+     })
+     .catch((e) => {
+        let errorMessage = "Error :"
 
+        if(axios.isAxiosError(e) ){
+          errorMessage +=e.response &&  e.response.data ? e.response.data.replace('Something went wrong. ','') 
+            : 'Addition failed, reason unknown...'
+        }
+        
+        displayError(errorMessage)
+      })
+   
   }
-
+  
+  const weatherList =Object.values(Weather)
+  const visibilityList =Object.values(Visibility)
+  
   return (
     <div style={{padding:"2rem"}}>
-     
+      
+      {notification && <h3 style={{border:"red 2px solid"}}>{notification}</h3> }
+
       <form onSubmit={onFormSubmit}> 
           
           <h1>Add new entry</h1>
-          <h2>Date : <input name="date" type="date" onChange={setEntryField}/></h2>
-          <h2>Weather : 
-             <label>
-          Select an option:
-          <select name="weather" onChange={setEntryField}>
-            <option value="option1">Option 1</option>
-            <option value="option2">Option 2</option>
-            <option value="option3">Option 3</option>
-          </select>
-        </label>
-
-          </h2>
-          <h2>Visibility : </h2>
-          <h2>Comment : </h2>
-         <button type="submit" >Submit</button>
-         
+          <h3>  Date{' '}: {' '}
+          <input name="date" type="date" 
+              defaultValue={new Date().toISOString().slice(0, 10)}
+              onChange={({target})=>setDate(target.value)}/>
+          </h3>
+          
+          <h3> Weather{' '}: {' '}  {weatherList.map((w)=> (<>
+             
+                    <label key={w}>
+                        <input
+                          type="radio"
+                          value={w}
+                          name="weather"
+                          checked={weather === w}
+                          onChange={()=>{setWeather(w)}}
+                        />
+                        {w}
+                      </label>
+                 </>))
+          } </h3>
+          <hr/>
+             <h3> Visibility{' '}: {' '}  {visibilityList.map((v)=> (<>
+             
+                    <label key={v}>
+                        <input
+                          type="radio"
+                          value={v}
+                          name="visibility"
+                          checked={visibility === v}
+                          onChange={()=>{setVisibility(v)}}
+                        />
+                        {v}
+                      </label>
+                 </>))
+          } </h3>
+          <hr/>
+          <button type="submit">Submit</button>
+          <br/>
+          <DiaryEntries  diaryEntries={diaryEntries.sort((a,b) => b.id-a.id)}/>
       </form>
       
    <hr/>
-   <ol>
-      {
-        diaryEntries.map(entry=>
-          
-            <li key={entry.id}>
-                  
-                  <p>Date :{entry.date} </p>
-                  <p>Weather :{entry.weather} </p>
-                  <p>Visibility :{entry.visibility} </p>
 
-            </li>)
-      }
-  </ol>
     </div>
   );
 }
