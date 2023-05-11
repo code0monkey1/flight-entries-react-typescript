@@ -2,7 +2,7 @@ interface RadioProps<T> {
   label: string;
   options: T[];
   value: T | null;
- onChange: (value: T) => void;
+  onChange: (value: T) => void;
 }
 
 export default function Radio<T extends string>({ label, options, value, onChange }: RadioProps<T>) {
