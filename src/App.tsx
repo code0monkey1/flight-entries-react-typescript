@@ -8,7 +8,7 @@ function App() {
   const [weather, setWeather] = useState<Weather | null>(null);
   const [visibility, setVisibility] = useState<Visibility | null>(null);
   const [comment, setComment] = useState("");
-  const [date, setDate] = useState('');
+  const [date, setDate] = useState(new Date().toISOString().slice(0, 10));
   const [diaryEntries, setDiaryEntries] = useState<NonSensitiveDiaryEntry[]>([]);
   const [notification, setNotification] = useState("");
 
@@ -84,7 +84,6 @@ function App() {
             name="date"
             type="date"
             value={date}
-            defaultValue={new Date().toISOString().slice(0, 10)}
             onChange={({ target }) => setDate(target.value)}
           />
         </h3>
