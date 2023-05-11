@@ -8,7 +8,7 @@ function App() {
   const [weather, setWeather] = useState<Weather | null>(null);
   const [visibility, setVisibility] = useState<Visibility | null>(null);
   const [comment, setComment] = useState("");
-  const [date, setDate] = useState("");
+  const [date, setDate] = useState('');
   const [diaryEntries, setDiaryEntries] = useState<NonSensitiveDiaryEntry[]>([]);
   const [notification, setNotification] = useState("");
 
@@ -83,6 +83,7 @@ function App() {
           <input
             name="date"
             type="date"
+            value={date}
             defaultValue={new Date().toISOString().slice(0, 10)}
             onChange={({ target }) => setDate(target.value)}
           />
