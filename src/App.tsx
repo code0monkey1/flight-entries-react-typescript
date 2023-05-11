@@ -103,7 +103,7 @@ function App() {
         />
 
         <h3>
-          Comment : <textarea name="comment" onChange={({ target }) => setComment(target.value)} />
+          Comment : <textarea name="comment" value={comment} onChange={({ target }) => setComment(target.value)} />
         </h3>
 
         <button type="submit">Submit</button>
