@@ -15,7 +15,9 @@ function App() {
   console.log("diaryEntries", diaryEntries);
 
   const displayError = (message: string) => {
+
     setNotification(message);
+    
     setTimeout(() => {
       setNotification("");
     }, 2000);
