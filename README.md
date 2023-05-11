@@ -62,7 +62,7 @@ _The only check needed was to make sure that the NewEntry object has `Weather` a
     
 ```
 
-#### While fetching diaries , do look out for error in the axios request like so : https
+#### While fetching diaries , do look out for error in the axios request by using `axios.isAxiosError` like so : 
 
 ```javascript
   const fetchDiaryEntries = async () => {
