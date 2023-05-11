@@ -1,11 +1,11 @@
-interface RadioProps {
+interface RadioProps<T> {
   label: string;
-  options: string[];
-  value: string | null;
-  onChange: (value: string) => void;
+  options: T[];
+  value: T | null;
+ onChange: (value: T) => void;
 }
 
-export default function Radio({ label, options, value, onChange }: RadioProps) {
+export default function Radio<T extends string>({ label, options, value, onChange }: RadioProps<T>) {
   return (
     <>
       <h3>
