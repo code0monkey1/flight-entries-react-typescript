@@ -1,7 +1,7 @@
 import axios from 'axios';
 import { DiaryEntry, NewDiaryEntry, NonSensitiveDiaryEntry } from '../types';
 
-const baseUrl = 'https://641fef8182bea25f6df72478.mockapi.io/api/v1/entries'
+const baseUrl = 'https://localhost:3000/api/'
 
 export const getDiaries = () =>
   axios.get<NonSensitiveDiaryEntry[]>(baseUrl).then(response => response.data)
