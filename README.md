@@ -1,7 +1,8 @@
 # React Typescript Frontend of Flight Diaries ( Connected to the Flight Diaries Typescript Backend ) 
 
 
-> You don't need to validate everything , like you did in the backend 
+> You don't need to validate everything before posting to the backend , from the frontend  , like you did in the backend 
+> 
 > Basic type checks would do .
 
 _The only check needed was to make sure that the NewEntry object has `Weather` and `Visibility` values_
